@@ -1,0 +1,3 @@
+rootProject.name = 'DelieverMe'
+
+include ':app'
