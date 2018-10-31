@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Button } from "react-native";
+import {
+  Container,
+  Header,
+  Content,
+  Card,
+  CardItem,
+  Body,
+  Text
+} from "native-base";
 
 class HomeScreen extends Component {
   state = {};
@@ -10,8 +19,7 @@ class HomeScreen extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Hello Home</Text>
+      <View style={{ margin: 5 }}>
         <Button title="Accounts" onPress={() => this.goToAccounts()} />
       </View>
     );

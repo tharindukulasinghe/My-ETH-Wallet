@@ -9,19 +9,42 @@ class AddAccountScreen extends Component {
     title: "Add a Account"
   };
 
-  saveAddress = async address => {
+  saveAddress = async (title, address) => {
     try {
-      await AsyncStorage.setItem("address", address);
+      var add = await AsyncStorage.getItem("addressesList");
+      if (add) {
+        var addresses = JSON.parse(add);
+        addresses.push({
+          title: title,
+          address: address,
+          key: "" + Date.now()
+        });
+        await AsyncStorage.setItem("addressesList", JSON.stringify(addresses));
+      } else {
+        var addresses = [];
+        addresses.push({
+          title: title,
+          address: address,
+          key: "" + Date.now()
+        });
+        await AsyncStorage.setItem("addressesList", JSON.stringify(addresses));
+      }
       alert("Successfully saved.");
       this.props.navigation.navigate("Accounts");
     } catch (error) {
-      alert("Error");
+      alert(error);
     }
   };
 
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.welcome}>Account Title</Text>
+        <TextInput
+          style={styles.welcome}
+          placeholder="Main Wallet"
+          onChangeText={text => this.setState({ title: text })}
+        />
         <Text style={styles.welcome}>Enter ERC-20 Account Number</Text>
         <TextInput
           style={styles.welcome}
@@ -30,7 +53,7 @@ class AddAccountScreen extends Component {
         />
         <Button
           title="Add Account"
-          onPress={() => this.saveAddress(this.state.address)}
+          onPress={() => this.saveAddress(this.state.title, this.state.address)}
         />
       </View>
     );

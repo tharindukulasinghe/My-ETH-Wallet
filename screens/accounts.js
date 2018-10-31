@@ -1,32 +1,42 @@
 import React, { Component } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Button,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity
+} from "react-native";
 import { AsyncStorage } from "react-native";
+import {
+  Container,
+  Header,
+  Content,
+  Card,
+  CardItem,
+  Body,
+  Text
+} from "native-base";
 
 class AccountScreen extends Component {
   state = {
     title: "",
-    address: ""
+    addresses: []
   };
 
-  componentDidMount() {
-    fetch("https://jsonplaceholder.typicode.com/todos/1")
-      .then(response => response.json())
-      .then(json => this.setState({ title: json.title }));
-    //this.getAddresses();
-  }
+  componentDidMount() {}
 
   addressSubscription = this.props.navigation.addListener(
     "willFocus",
     payload => {
-      console.debug("didBlur", payload);
       this.getAddresses();
     }
   );
+
   getAddresses = async () => {
     try {
-      const value = await AsyncStorage.getItem("address");
+      const value = await AsyncStorage.getItem("addressesList");
       if (value !== null) {
-        this.setState({ address: value });
+        this.setState({ addresses: JSON.parse(value) });
         //alert(value);
       }
     } catch (error) {
@@ -40,12 +50,13 @@ class AccountScreen extends Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: "Your Accounts",
+      title: "My Wallets",
       headerRight: (
         <View style={{ marginRight: 10 }}>
           <Button
             onPress={() => navigation.navigate("AddAccount")}
-            title="Add"
+            title="Add
+             Wallet"
           />
         </View>
       )
@@ -55,8 +66,26 @@ class AccountScreen extends Component {
   render() {
     return (
       <View>
-        <Text>{this.state.title}</Text>
-        <Text>{this.state.address}</Text>
+        <FlatList
+          style={{ margin: 3 }}
+          data={this.state.addresses}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity onPress={() => alert(item.title)}>
+                <Card>
+                  <CardItem>
+                    <Body>
+                      <Text style={{ fontWeight: "bold", fontSize: 24 }}>
+                        {item.title}
+                      </Text>
+                      <Text style={{ fontSize: 18 }}>{item.address}</Text>
+                    </Body>
+                  </CardItem>
+                </Card>
+              </TouchableOpacity>
+            );
+          }}
+        />
       </View>
     );
   }
