@@ -9,6 +9,19 @@ class AddAccountScreen extends Component {
     title: "Add a Account"
   };
 
+  async checkAddress(title, address) {
+    fetch(`http://api.ethplorer.io/getAddressInfo/${address}?apiKey=freekey`)
+      .then(response => response.json())
+      .then(json => {
+        if (!json.error) {
+          this.saveAddress(title, address);
+        } else {
+          alert("Enter valid ERC-20 wallet address");
+        }
+      })
+      .catch(err => false);
+  }
+
   saveAddress = async (title, address) => {
     try {
       var add = await AsyncStorage.getItem("addressesList");
@@ -39,21 +52,23 @@ class AddAccountScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Account Title</Text>
+        <Text style={styles.welcome}>Wallet Title</Text>
         <TextInput
           style={styles.welcome}
           placeholder="Main Wallet"
           onChangeText={text => this.setState({ title: text })}
         />
-        <Text style={styles.welcome}>Enter ERC-20 Account Number</Text>
+        <Text style={styles.welcome}>Enter ERC-20 Wallet Address</Text>
         <TextInput
           style={styles.welcome}
           placeholder="0x"
           onChangeText={text => this.setState({ address: text })}
         />
         <Button
-          title="Add Account"
-          onPress={() => this.saveAddress(this.state.title, this.state.address)}
+          title="Add Wallet"
+          onPress={() =>
+            this.checkAddress(this.state.title, this.state.address)
+          }
         />
       </View>
     );

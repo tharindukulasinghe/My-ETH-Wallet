@@ -38,6 +38,9 @@ class AccountInfoScreen extends Component {
   getETHbalance() {
     //const balance = JSON.parse(this.state.addInfo).ETH.balance;
     var balance = this.state.addInfo.ETH.balance;
+    if (balance === false) {
+      return 0;
+    }
     return balance;
   }
 

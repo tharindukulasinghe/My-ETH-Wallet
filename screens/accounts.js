@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { AsyncStorage } from "react-native";
-import { Card, CardItem, Body, Text } from "native-base";
+import { Card, CardItem, Text } from "native-base";
 
 class AccountScreen extends Component {
   state = {
