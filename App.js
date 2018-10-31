@@ -4,6 +4,7 @@ import { createStackNavigator } from "react-navigation";
 import HomeScreen from "./screens/home";
 import AccountScreen from "./screens/accounts";
 import AddAccountScreen from "./screens/addaccount";
+import AccountInfoScreen from "./screens/accountinfo";
 
 export default class App extends Component {
   render() {
@@ -21,6 +22,9 @@ const RootStack = createStackNavigator(
     },
     AddAccount: {
       screen: AddAccountScreen
+    },
+    AccountInfo: {
+      screen: AccountInfoScreen
     }
   },
   {

@@ -7,15 +7,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { AsyncStorage } from "react-native";
-import {
-  Container,
-  Header,
-  Content,
-  Card,
-  CardItem,
-  Body,
-  Text
-} from "native-base";
+import { Card, CardItem, Body, Text } from "native-base";
 
 class AccountScreen extends Component {
   state = {
@@ -48,6 +40,12 @@ class AccountScreen extends Component {
     this.props.navigation.navigate("AddAccount");
   }
 
+  goToAccountInfo(address) {
+    this.props.navigation.navigate("AccountInfo", {
+      item: address
+    });
+  }
+
   static navigationOptions = ({ navigation }) => {
     return {
       title: "My Wallets",
@@ -55,8 +53,7 @@ class AccountScreen extends Component {
         <View style={{ marginRight: 10 }}>
           <Button
             onPress={() => navigation.navigate("AddAccount")}
-            title="Add
-             Wallet"
+            title="Add Wallet"
           />
         </View>
       )
@@ -71,15 +68,17 @@ class AccountScreen extends Component {
           data={this.state.addresses}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity onPress={() => alert(item.title)}>
+              <TouchableOpacity
+                onPress={() => this.goToAccountInfo(item.address)}
+              >
                 <Card>
+                  <CardItem header bordered>
+                    <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+                      {item.title}
+                    </Text>
+                  </CardItem>
                   <CardItem>
-                    <Body>
-                      <Text style={{ fontWeight: "bold", fontSize: 24 }}>
-                        {item.title}
-                      </Text>
-                      <Text style={{ fontSize: 18 }}>{item.address}</Text>
-                    </Body>
+                    <Text style={{ fontSize: 16 }}>{item.address}</Text>
                   </CardItem>
                 </Card>
               </TouchableOpacity>
