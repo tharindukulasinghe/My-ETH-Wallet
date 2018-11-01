@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, Button } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Statusbar
+} from "react-native";
 import { createStackNavigator } from "react-navigation";
 import HomeScreen from "./screens/home";
 import AccountScreen from "./screens/accounts";
@@ -32,7 +39,16 @@ const RootStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Home",
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: "#00695C"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      }
+    }
   }
 );
 

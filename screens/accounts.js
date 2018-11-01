@@ -4,7 +4,8 @@ import {
   Button,
   StyleSheet,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  StatusBar
 } from "react-native";
 import { AsyncStorage } from "react-native";
 import { Card, CardItem, Text } from "native-base";
@@ -61,8 +62,19 @@ class AccountScreen extends Component {
   };
 
   render() {
+    if (this.state.addresses.length == 0 || !this.state.addresses) {
+      return (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <StatusBar backgroundColor="#004D40" />
+          <Text> Add a ERC-20 Wallet to Get started.</Text>
+        </View>
+      );
+    }
     return (
       <View>
+        <StatusBar backgroundColor="#004D40" />
         <FlatList
           style={{ margin: 3 }}
           data={this.state.addresses}

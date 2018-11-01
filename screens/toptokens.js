@@ -1,9 +1,13 @@
 import React, { Component } from "react";
-import { View, ScrollView, ActivityIndicator } from "react-native";
+import { View, ScrollView, ActivityIndicator, StatusBar } from "react-native";
 import { Card, CardItem, Body, Text, Right } from "native-base";
 
 class TopTokenScreen extends Component {
   state = {};
+
+  static navigationOptions = {
+    title: "Top tokens"
+  };
 
   constructor(props) {
     super(props);
@@ -14,7 +18,7 @@ class TopTokenScreen extends Component {
     fetch(`http://api.ethplorer.io/getTop?limit=10&apiKey=freekey&criteria=cap`)
       .then(response => response.json())
       .then(json => {
-        this.setState({ tokens: json, isLoading: false });
+        this.getActiveTokens(json);
       })
       .catch(err => alert("Error : " + err));
   }
@@ -22,6 +26,20 @@ class TopTokenScreen extends Component {
   getTokens() {
     var tokens = this.state.tokens.tokens;
     return tokens;
+  }
+
+  getTopTokens() {
+    var tokens = this.state.toptokens.tokens;
+    return tokens;
+  }
+
+  getActiveTokens(tokens) {
+    fetch(`http://api.ethplorer.io/getTopTokens?limit=10&apiKey=freekey`)
+      .then(response => response.json())
+      .then(json => {
+        this.setState({ toptokens: json, isLoading: false, tokens: tokens });
+      })
+      .catch(err => alert("Error : " + err));
   }
 
   render() {
@@ -34,18 +52,40 @@ class TopTokenScreen extends Component {
     }
 
     return (
-      <ScrollView>
+      <ScrollView style={{ margin: 3 }}>
+        <StatusBar backgroundColor="#004D40" />
         <Card>
           <CardItem header bordered>
-            <Text style={{ fontSize: 18 }}>Top 10 Tokens</Text>
+            <Text style={{ fontSize: 18 }}>
+              Top 10 Tokens by Capitalization
+            </Text>
           </CardItem>
           {this.getTokens().map(token => {
             return (
               <CardItem bordered key={token.address}>
-                <Text style={{ fontSize: 18 }}>{token.name}</Text>
+                <Text style={{ fontSize: 16 }}>{token.name}</Text>
                 <Right style={{ flex: 1 }}>
                   <Text
-                    style={{ fontSize: 16, textAlign: "right", marginRight: 3 }}
+                    style={{ fontSize: 16, textAlign: "right", marginRight: 6 }}
+                  >
+                    {token.symbol}
+                  </Text>
+                </Right>
+              </CardItem>
+            );
+          })}
+        </Card>
+        <Card>
+          <CardItem header bordered>
+            <Text style={{ fontSize: 18 }}>Top 10 Most Active Tokens</Text>
+          </CardItem>
+          {this.getTopTokens().map(token => {
+            return (
+              <CardItem bordered key={token.address}>
+                <Text style={{ fontSize: 16 }}>{token.name}</Text>
+                <Right style={{ flex: 1 }}>
+                  <Text
+                    style={{ fontSize: 16, textAlign: "right", marginRight: 6 }}
                   >
                     {token.symbol}
                   </Text>

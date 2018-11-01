@@ -1,17 +1,6 @@
 import React, { Component } from "react";
-import { View } from "react-native";
-import {
-  Container,
-  Header,
-  Content,
-  Card,
-  CardItem,
-  Body,
-  Text,
-  Button,
-  Left,
-  Right
-} from "native-base";
+import { View, StatusBar } from "react-native";
+import { CardItem, Text, Button, Left, Right } from "native-base";
 
 class HomeScreen extends Component {
   state = {};
@@ -31,6 +20,7 @@ class HomeScreen extends Component {
           backgroundColor: "white"
         }}
       >
+        <StatusBar backgroundColor="#004D40" />
         <CardItem>
           <Left />
           <Button

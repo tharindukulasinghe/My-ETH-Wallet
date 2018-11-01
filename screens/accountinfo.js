@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ScrollView, ActivityIndicator } from "react-native";
+import { View, ScrollView, ActivityIndicator, StatusBar } from "react-native";
 import { Card, CardItem, Body, Text, Right } from "native-base";
 
 class AccountInfoScreen extends Component {
@@ -63,6 +63,7 @@ class AccountInfoScreen extends Component {
     }
     return (
       <ScrollView style={{ margin: 3 }}>
+        <StatusBar backgroundColor="#004D40" />
         <Card>
           <CardItem header bordered>
             <Text style={{ fontSize: 18 }}>ETH Balance</Text>
@@ -82,9 +83,11 @@ class AccountInfoScreen extends Component {
           {this.getTokens().map(token => {
             return (
               <CardItem bordered key={token.tokenInfo.address}>
-                <Text style={{ fontSize: 18 }}>{token.tokenInfo.name}</Text>
-                <Right>
-                  <Text style={{ fontSize: 18 }}>
+                <Text style={{ fontSize: 16 }}>{token.tokenInfo.name}</Text>
+                <Right style={{ flex: 1 }}>
+                  <Text
+                    style={{ fontSize: 16, textAlign: "right", marginRight: 3 }}
+                  >
                     {this.format(
                       token.balance.toPrecision() /
                         Math.pow(10, parseInt(token.tokenInfo.decimals))

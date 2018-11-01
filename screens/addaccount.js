@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  StatusBar
+} from "react-native";
 import { AsyncStorage } from "react-native";
 
 class AddAccountScreen extends Component {
@@ -52,6 +59,7 @@ class AddAccountScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar backgroundColor="#004D40" />
         <Text style={styles.welcome}>Wallet Title</Text>
         <TextInput
           style={styles.welcome}
