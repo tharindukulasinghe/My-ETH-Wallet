@@ -51,7 +51,7 @@ class HomeScreen extends Component {
             info
             large
             bordered
-            onPress={() => this.goToAccounts()}
+            onPress={() => this.goToTopTokens()}
           >
             <Text> Top Tokens </Text>
           </Button>
@@ -63,6 +63,10 @@ class HomeScreen extends Component {
 
   goToAccounts() {
     this.props.navigation.navigate("Accounts");
+  }
+
+  goToTopTokens() {
+    this.props.navigation.navigate("TopTokens");
   }
 }
 

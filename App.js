@@ -5,6 +5,7 @@ import HomeScreen from "./screens/home";
 import AccountScreen from "./screens/accounts";
 import AddAccountScreen from "./screens/addaccount";
 import AccountInfoScreen from "./screens/accountinfo";
+import TopTokenScreen from "./screens/toptokens";
 
 export default class App extends Component {
   render() {
@@ -25,6 +26,9 @@ const RootStack = createStackNavigator(
     },
     AccountInfo: {
       screen: AccountInfoScreen
+    },
+    TopTokens: {
+      screen: TopTokenScreen
     }
   },
   {
