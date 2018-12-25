@@ -97,7 +97,7 @@ class HomeScreen extends Component {
 
   showVideoAd() {
     AdMobRewarded.requestAd().then(AdMobRewarded.showAd());
-    alert("No coin faucets available!");
+    //alert("No coin faucets available!");
   }
 }
 
