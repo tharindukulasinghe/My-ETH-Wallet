@@ -11,8 +11,33 @@ class HomeScreen extends Component {
   };
 
   componentDidMount() {
-    AdMobRewarded.setAdUnitID("ca-app-pub-5256999799292373~1338008968");
-    AdMobRewarded.requestAd().then();
+    //AdMobRewarded.setTestDevices([AdMobRewarded.simulatorId]);
+    AdMobRewarded.setAdUnitID("ca-app-pub-5256999799292373/3586322807");
+
+    AdMobRewarded.addEventListener("rewarded", reward =>
+      console.log("AdMobRewarded => rewarded", reward)
+    );
+    AdMobRewarded.addEventListener("adLoaded", () =>
+      console.log("AdMobRewarded => adLoaded")
+    );
+    AdMobRewarded.addEventListener("adFailedToLoad", error =>
+      console.warn(error)
+    );
+    AdMobRewarded.addEventListener("adOpened", () =>
+      console.log("AdMobRewarded => adOpened")
+    );
+    AdMobRewarded.addEventListener("videoStarted", () =>
+      console.log("AdMobRewarded => videoStarted")
+    );
+    AdMobRewarded.addEventListener("adClosed", () => {
+      console.log("AdMobRewarded => adClosed");
+      AdMobRewarded.requestAd().catch(error => console.warn(error));
+    });
+    AdMobRewarded.addEventListener("adLeftApplication", () =>
+      console.log("AdMobRewarded => adLeftApplication")
+    );
+
+    AdMobRewarded.requestAd().catch(error => console.warn(error));
   }
 
   render() {
@@ -60,7 +85,7 @@ class HomeScreen extends Component {
               <Right />
             </CardItem>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.showVideoAd()}>
+          <TouchableOpacity onPress={() => this.showRewarded()}>
             <CardItem style={{ backgroundColor: "white", borderRadius: 10 }}>
               <Left />
               <Button
@@ -68,7 +93,7 @@ class HomeScreen extends Component {
                 transparent
                 large
                 info
-                onPress={() => this.showVideoAd()}
+                onPress={() => this.showRewarded()}
               >
                 <Text> Coin Faucet </Text>
               </Button>
@@ -98,6 +123,15 @@ class HomeScreen extends Component {
   showVideoAd() {
     AdMobRewarded.requestAd().then(AdMobRewarded.showAd());
     //alert("No coin faucets available!");
+  }
+
+  showRewarded() {
+    AdMobRewarded.showAd()
+      .catch(error => console.warn(error))
+      .then(() => {
+        AdMobRewarded.requestAd().catch(error => console.warn(error));
+        this.props.navigation.navigate("CoinFaucet");
+      });
   }
 }
 
