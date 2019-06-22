@@ -13,6 +13,7 @@ import AccountScreen from "./screens/accounts";
 import AddAccountScreen from "./screens/addaccount";
 import AccountInfoScreen from "./screens/accountinfo";
 import TopTokenScreen from "./screens/toptokens";
+import CoinFaucetScreen from "./screens/coinfaucet";
 
 export default class App extends Component {
   render() {
@@ -36,6 +37,9 @@ const RootStack = createStackNavigator(
     },
     TopTokens: {
       screen: TopTokenScreen
+    },
+    CoinFaucet: {
+      screen: CoinFaucetScreen
     }
   },
   {
