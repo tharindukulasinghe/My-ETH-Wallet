@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, StatusBar } from "react-native";
 import { CardItem, Text, Button, Left, Right } from "native-base";
+import { AdMobBanner } from "react-native-admob";
 
 class HomeScreen extends Component {
   state = {};
@@ -47,9 +48,19 @@ class HomeScreen extends Component {
           </Button>
           <Right />
         </CardItem>
+        <AdMobBanner
+          bannerSize="fullBanner"
+          adUnitID="ca-app-pub-3940256099942544/6300978111"
+          testDeviceID="EMULATOR"
+          didFailToReceiveAdWithError={this.bannerError}
+        />
       </View>
     );
   }
+
+  bannerError = e => {
+    alert(e);
+  };
 
   goToAccounts() {
     this.props.navigation.navigate("Accounts");
